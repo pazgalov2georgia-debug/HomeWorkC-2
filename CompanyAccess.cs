@@ -210,7 +210,7 @@ namespace HomeWorkC__2
 
                 //Access Calculations - Secret Library:
                 if (RequestedZoneAccess == "Secret Library" && Status == "Agent" && ClearanceLevel == "Top Secret" && ThreatAssesment == "Low")
-                { Console.WriteLine("Access Granted - Welcome to the Secret Library"); }
+                { Console.WriteLine("Access Granted - Welcome to the Secret Library " + "Agent " + LastName); }
                 else if (RequestedZoneAccess == "Secret Library" && Status != "Agent" & ClearanceLevel == "Top Secret" & ThreatAssesment == "Low")
                 { Console.WriteLine("Access Denied: You must be an Agent to get the Secret Library access"); }
                 else if (RequestedZoneAccess == "Secret Library" && Status == "Agent" & ClearanceLevel != "Top Secret" & ThreatAssesment == "Low")
@@ -219,7 +219,7 @@ namespace HomeWorkC__2
                 { Console.WriteLine("Access Denied: You must be considered a low threat to get the Secret Library access"); }
                 //Access Calculations - Lab:
                 else if (RequestedZoneAccess == "Lab" && Status == "Agent" && ClearanceLevel != "Confidential" && ThreatAssesment != "High")
-                { Console.WriteLine("Access Granted - Welcome to the Lab"); }
+                { Console.WriteLine("Access Granted - Welcome to the Lab" + "Agent " + LastName);}
                 else if (RequestedZoneAccess == "Lab" && Status == "Agent" & ClearanceLevel != "Confidential" & (ThreatAssesment == "High"))
                 { Console.WriteLine("Access Denied - High Threat Level agents are not allowed to the Lab"); }
                 else if (RequestedZoneAccess == "Lab" && Status == "Agent" & ClearanceLevel == "Confidential" & ThreatAssesment != "High")
@@ -230,7 +230,7 @@ namespace HomeWorkC__2
                 {Console.WriteLine("Access Denied - Restricted area - Authorized Personnel Only"); }
                 //Access Calculations - Conference-room:
                 else if (RequestedZoneAccess == "Conference-room" && Status == "Agent" && ClearanceLevel != null && ThreatAssesment != null)
-                { Console.WriteLine("Access Granted - Welcome to the Lab"); }
+                { Console.WriteLine("Access Granted - Welcome to the Lab" + "Agent " + LastName);}
                 else if (RequestedZoneAccess == "Conference-room" && Status == "Visitor" && ClearanceLevel != null && ThreatAssesment == "Low")
                 { Console.WriteLine("Access Granted - Welcome to the Lab"); }
                 else if (RequestedZoneAccess == "Conference-room" && Status == "Visitor" && ClearanceLevel != null && ThreatAssesment != "Low")
