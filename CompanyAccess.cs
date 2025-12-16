@@ -16,62 +16,58 @@ namespace HomeWorkC__2
             string ClearanceLevel = null;
             string Armed = null;
             string AggressionLevel = null;
-            string RequestedZoneAccess = null;
-            string Access = null;
-            int ThreatAssesment = 0;
+            string RequestedZoneAccess = null;            
+            string ThreatAssesment = null;
+            string LastName = null;
 
-
+            Console.WriteLine("Greetings. In order to visit our Facility, please, submit the required data");
+            Console.WriteLine("Specify your last name");
+            LastName = Console.ReadLine();
             //1) Age Input
             Console.WriteLine("Specify your Age:");
             Age = Int32.Parse(Console.ReadLine());
             if (Age < 18)
             {
-                Console.WriteLine("Access Request Denied. Our Facility is inaccessible for an underaged citizens. Your Guardian will be notified about your attempt.");
+                Console.WriteLine("Access Request Denied. Our Facility is inaccessible for the underaged citizens.");
             }
             else
             {//2) Access Status
-                Console.WriteLine("Specify your Status - Guest/Employee:");
-                bool StatusBullshitCheck = true;
-                bool Statusbool = true;
+                Console.WriteLine("Specify your Status - Visitor/Agent:");
+                bool StatusBullshitCheck = true;                
                 do
                 {
                     Status = Console.ReadLine();
-                    if (Status.ToLower() == "guest")
+                    if (Status.ToLower() == "visitor")
                     {
-                        StatusBullshitCheck = true;
-                        Statusbool = false;
-                        Status = "Guest";
+                        StatusBullshitCheck = true;                       
+                        Status = "Visitor";
                     }
-                    else if (Status.ToLower() == "employee")
+                    else if (Status.ToLower() == "agent")
                     {
                         StatusBullshitCheck = true;
-                        Statusbool = true;
-                        Status = "Employee";
+                        Status = "Agent";
                     }
                     else
                     {
                         StatusBullshitCheck = false;
-                        Status = "Unrecognized role. Please specify 'Guest' or 'Employee'.";
+                        Status = "Unrecognized role. Please specify 'Visitor' or 'Agent'.";
                         Console.WriteLine(Status);
                     }
                 } while (!StatusBullshitCheck);
                 //3)Securty Clearance Status
                 Console.WriteLine("Do you have an issued Secret Clearance: Yes/No");
                 bool ClStBullshitCheck = true;
-                bool ClStboolCheck = true;
                 do
                 {
                     Clearance = Console.ReadLine();
                     if (Clearance.ToLower() == "yes")
                     {
                         ClStBullshitCheck = true;
-                        ClStboolCheck = true;
                         Clearance = "Clearance Issued";
                     }
                     else if (Clearance.ToLower() == "no")
                     {
                         ClStBullshitCheck = true;
-                        ClStboolCheck = false;
                         Clearance = "Access Request Denied. Our facility in incassesble without a Security Clearance, please, contact your local FSB office.";
                         Console.WriteLine(Clearance);
                         return;
@@ -164,7 +160,7 @@ namespace HomeWorkC__2
                     }
                 } while (!PsyEvalStatusBullShitCheck);
                 //7) Requested Zone Access
-                Console.WriteLine("Specify Requested Zone Access - Conference-room/Lab/Secret Library");
+                Console.WriteLine("Specify requested Zone access - Conference-room/Lab/Secret Library");
                 bool ZoneAccessBullShitCheck = true;
                 do
                 {
@@ -187,11 +183,11 @@ namespace HomeWorkC__2
                     else
                     {
                         ZoneAccessBullShitCheck = false;
-                        RequestedZoneAccess = "Please, identify your most recent psychic-evaluation status - Aggressive/Non-aggressive\"";
+                        RequestedZoneAccess = "Invalid Input. Specify the requested Zone access - 'Conference-room', 'Lab', 'Secret Library'";
                         Console.WriteLine(RequestedZoneAccess);
                     }
                 } while (!ZoneAccessBullShitCheck);
-
+                //Gathered details
                 Console.WriteLine("=======================================");
                 Console.WriteLine("Verify the following details:");
                 Console.WriteLine("Visitor's Age: " + Age);
@@ -204,22 +200,43 @@ namespace HomeWorkC__2
                 Console.WriteLine("=======================================");
                 //Threat Assesment
                 if (PsyEvalStatus && WeaponCarry)
-                { ThreatAssesment = 1; }
+                { ThreatAssesment = "Low"; }
                 else if (PsyEvalStatus && !WeaponCarry)
-                { ThreatAssesment = 2; }
+                { ThreatAssesment = "Medium"; }
                 else if (!PsyEvalStatus && WeaponCarry)
-                { ThreatAssesment = 2; }
+                { ThreatAssesment = "Medium"; }
                 else if (!PsyEvalStatus && !WeaponCarry)
-                { ThreatAssesment = 3; }
+                { ThreatAssesment = "High"; }
 
-                
-                //Boolean conversion
-
-            
-            
-
-
-                
+                //Access Calculations - Secret Library:
+                if (RequestedZoneAccess == "Secret Library" && Status == "Agent" && ClearanceLevel == "Top Secret" && ThreatAssesment == "Low")
+                { Console.WriteLine("Access Granted - Welcome to the Secret Library"); }
+                else if (RequestedZoneAccess == "Secret Library" && Status != "Agent" & ClearanceLevel == "Top Secret" & ThreatAssesment == "Low")
+                { Console.WriteLine("Access Denied: You must be an Agent to get the Secret Library access"); }
+                else if (RequestedZoneAccess == "Secret Library" && Status == "Agent" & ClearanceLevel != "Top Secret" & ThreatAssesment == "Low")
+                { Console.WriteLine("Access Denied: You must have the highest clearance level - 'Top Secret' to get the Secret Library access"); }
+                else if (RequestedZoneAccess == "Secret Library" && Status == "Agent" & ClearanceLevel != "Top Secret" & ThreatAssesment == "Low")
+                { Console.WriteLine("Access Denied: You must be considered a low threat to get the Secret Library access"); }
+                //Access Calculations - Lab:
+                else if (RequestedZoneAccess == "Lab" && Status == "Agent" && ClearanceLevel != "Confidential" && ThreatAssesment != "High")
+                { Console.WriteLine("Access Granted - Welcome to the Lab"); }
+                else if (RequestedZoneAccess == "Lab" && Status == "Agent" & ClearanceLevel != "Confidential" & (ThreatAssesment == "High"))
+                { Console.WriteLine("Access Denied - High Threat Level agents are not allowed to the Lab"); }
+                else if (RequestedZoneAccess == "Lab" && Status == "Agent" & ClearanceLevel == "Confidential" & ThreatAssesment != "High")
+                { Console.WriteLine("Access Denied - Contact your Local FSB office to request a higher clearance level."); }
+                else if (RequestedZoneAccess == "Lab" && Status == "Agent" & ClearanceLevel == "Confidential" & ThreatAssesment == "High")
+                { Console.WriteLine("Access Denied - Contact your Local FSB office to request a higher clearance level and re-evaluate your Threat Level"); }
+                else if (RequestedZoneAccess == "Lab" && Status != "Agent" & ClearanceLevel != "Confidential" & ThreatAssesment != "High")
+                {Console.WriteLine("Access Denied - Restricted area - Authorized Personnel Only"); }
+                //Access Calculations - Conference-room:
+                else if (RequestedZoneAccess == "Conference-room" && Status == "Agent" && ClearanceLevel != null && ThreatAssesment != null)
+                { Console.WriteLine("Access Granted - Welcome to the Lab"); }
+                else if (RequestedZoneAccess == "Conference-room" && Status == "Visitor" && ClearanceLevel != null && ThreatAssesment == "Low")
+                { Console.WriteLine("Access Granted - Welcome to the Lab"); }
+                else if (RequestedZoneAccess == "Conference-room" && Status == "Visitor" && ClearanceLevel != null && ThreatAssesment != "Low")
+                { Console.WriteLine("Access Denied - Threat level assesment failed, contact your Coordinator"); }
+                Console.WriteLine("Press any key to exist");
+                Console.ReadKey();
             }
         }
     }
